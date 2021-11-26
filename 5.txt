@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+struct List
+{
+    int x;
+    List* first;
+    List* last;
+};
+void Add(int x, List*& MyList)
+{
+    List* temp = new List;
+    temp->x = x;
+    temp->last = MyList->first;
+    MyList->first = temp;
+}
+void Show(List* MyList)
+{
+    List* temp = MyList->first;
+    while (temp != nullptr)
+    {
+        cout << temp->x << " ";
+        temp = temp->last;
+    }
+}
+void ClearList(List* MyList)
+{
+    while (MyList->first != nullptr)
+    {
+        List* temp = MyList->first->last;
+        delete MyList->first;
+        MyList->first = temp;
+    }
+}
+int main()
+{
+    int n, k = 0;
+    cin >> n;
+    List* MyList = new List;
+    MyList->first = nullptr;
+    for (int i = 0; i < n; i++) {
+        cin >> k;
+        Add(k, MyList);
+    }
+    Show(MyList);
+    ClearList(MyList);
+    delete MyList->first;
+    delete MyList;
+}
